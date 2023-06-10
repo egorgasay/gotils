@@ -7,15 +7,16 @@ import (
 
 var ErrNilPointer = fmt.Errorf("nil pointer")
 
-func FromPtr(v any) (any, error) {
+func FromPtr[T any](v any) (t T, err error) {
 	vValue := reflect.ValueOf(v)
 	if vValue.Kind() == reflect.Ptr {
 		if vValue.IsNil() {
-			return nil, ErrNilPointer
+			return t, ErrNilPointer
 		}
 		vValue = vValue.Elem()
-		return FromPtr(vValue.Interface())
+		t, err = FromPtr[T](vValue.Interface())
+		return t, err
 	}
 
-	return v, nil
+	return v.(T), nil
 }

@@ -12,7 +12,7 @@ func Test_FromPtr(t *testing.T) {
 	t4 := &t3
 	t5 := &t4
 
-	got, err := FromPtr(t5)
+	got, err := FromPtr[string](t5)
 	if err != nil {
 		t.Errorf("fromPtr() error = %v, wantErr false", err)
 		return
@@ -21,7 +21,7 @@ func Test_FromPtr(t *testing.T) {
 		t.Errorf("fromPtr() got = %v, want %v", got, t1)
 	}
 
-	got, err = FromPtr(t1)
+	got, err = FromPtr[string](t1)
 	if err != nil {
 		t.Errorf("fromPtr() error = %v, wantErr false", err)
 		return
@@ -34,7 +34,7 @@ func Test_FromPtr(t *testing.T) {
 
 	t5 = nil
 	t7 := &t5
-	got, err = FromPtr(t7)
+	_, err = FromPtr[any](t7)
 	if err == nil {
 		t.Errorf("fromPtr() error = %v, wantErr false", err)
 		return
